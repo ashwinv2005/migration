@@ -65,8 +65,6 @@ readcleanrawdata = function(rawpath = "ebd_IN_relAug-2018.txt")
     temp = data %>%
     group_by(COMMON.NAME) %>% slice(1) %>% ungroup()
   
-  write.csv(temp,"indiaspecieslist.csv")
-  
   assign("data",data,.GlobalEnv)
   rm(readcleanrawdata, pos = ".GlobalEnv")
   

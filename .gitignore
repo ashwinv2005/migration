@@ -39,6 +39,14 @@ rsconnect/
 # raw data files
 /*.csv
 /*.txt
+/*.gif
+/*.jpeg
+/*.tiff
+/*.tif
+/*.png
+/*.svg
+/*.xlxs
+/*.pdf
 
 # zipped files
 /*.zip
@@ -58,3 +66,18 @@ rsconnect/
 India/
 India Districts/
 India States/
+All Trends/
+All Maps/
+All Trend Graphs/
+Chennai/
+New Delhi/
+Mumbai/
+Kolkata/
+Hyderabad/
+Bangalore/
+snippets/
+NE_places/
+NE_box/
+NE_graticules/
+NE_countries/
+Division@Range6/

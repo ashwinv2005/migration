@@ -81,7 +81,7 @@ worldbasemap = function()
   require(rgdal)      # for spTransform() & project()
   
   # __________ Load ready to use data from GitHub
-  load(url("https://github.com/valentinitnelav/RandomScripts/blob/master/NaturalEarth.RData?raw=true"))
+  #load(url("https://github.com/valentinitnelav/RandomScripts/blob/master/NaturalEarth.RData?raw=true"))
   # This will load 6 objects:
   #   xbl.X & lbl.Y are two data.frames that contain labels for graticule lines
   #       They can be created with the code at this link: 
@@ -109,7 +109,23 @@ worldbasemap = function()
   #dir.create("NE_countries")
   #writeOGR(obj=NE_countries, dsn="NE_countries", layer="NE_countries", driver="ESRI Shapefile")
   
+  #dir.create("NE_graticules")
+  #writeOGR(obj=NE_graticules, dsn="NE_graticules", layer="NE_graticules", driver="ESRI Shapefile")
+  
+  #dir.create("NE_box")
+  #writeOGR(obj=NE_box, dsn="NE_box", layer="NE_box", driver="ESRI Shapefile")
+  
+  #dir.create("NE_places")
+  #writeOGR(obj=NE_places, dsn="NE_places", layer="NE_places", driver="ESRI Shapefile")
+  
+  #write.csv(lbl.X,"lbl.X.csv",row.names = F)
+  #write.csv(lbl.Y,"lbl.Y.csv",row.names = F)
+  
   NE_countries = readOGR("NE_countries")
+  NE_graticules = readOGR("NE_graticules")
+  NE_box = readOGR("NE_box")
+  lbl.X = read.csv("lbl.X.csv")
+  lbl.Y = read.csv("lbl.Y.csv")
   
   PROJ = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 
   # or use the short form "+proj=robin"

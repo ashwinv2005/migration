@@ -262,15 +262,15 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
   
   if (n == 1)
   {
-    nm = strsplit(rawpath1,"_")
-    nm = paste(nm[[1]][2],"_",minlong,"_",minlat,"_",maxlong,"_",maxlat,".gif",sep = "")
+    nm = specs
+    nm = paste(nm,"_",minlong,"_",minlat,"_",maxlong,"_",maxlat,".gif",sep = "")
   }
   
   if (n != 1)
   {
-    nm1 = strsplit(rawpath1,"_")
-    nm2 = strsplit(rawpath2,"_")
-    nm = paste(nm1[[1]][2],"_",nm2[[1]][2],"_",minlong,"_",minlat,"_",maxlong,"_",maxlat,".gif",sep = "")
+    nm1 = specs1
+    nm2 = specs2
+    nm = paste(nm1,"_",nm2,"_",minlong,"_",minlat,"_",maxlong,"_",maxlat,".gif",sep = "")
   }
   
   

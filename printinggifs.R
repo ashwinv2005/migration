@@ -1,15 +1,115 @@
 source('~/GitHub/migration/functions.R')
 ggp = worldbasemap()
 
+migrationmap(ggp = ggp, rawpath1 = "ebd_oripra_relApr-2019.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = 74,minlat = -35,maxlong = 170, maxlat = 50)
+
+PROJ = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 
+#PROJ = "+proj=eck4 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 
+
+min = project(cbind(74,-35), proj = PROJ)
+max = project(cbind(170,50), proj = PROJ)
+
+min = project(cbind(-15,-3), proj = PROJ)
+max = project(cbind(142,55), proj = PROJ)
+
+#World
+min = project(cbind(-180,-70), proj = PROJ)
+max = project(cbind(180,70), proj = PROJ)
+
+#Old World
+min = project(cbind(-15,-45), proj = PROJ)
+max = project(cbind(180,75), proj = PROJ)
+
+#India
+min = project(cbind(67.5,5), proj = PROJ)
+max = project(cbind(100,37), proj = PROJ)
+
+ggp +
+  coord_cartesian(xlim = c(min[1],max[1]), ylim = c(min[2],max[2]))
+
 ############################################### Africa #########################################
 
-gc() # European roller vs. Amur falcon - inc. Africa
-migrationmap(ggp = ggp, rawpath1 = "ebd_eurrol1_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10,
-             n = 2,rawpath2 = "ebd_amufal1_relAug-2018.txt")
 
-gc() # Common cuckoo vs. Blue-cheeked bee-eater - inc. Africa
-migrationmap(ggp = ggp, rawpath1 = "ebd_comcuc_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10,
-             n = 2,rawpath2 = "ebd_bcbeat1_relAug-2018.txt")
+#gc() # Wilson's Storm-Petrel world
+migrationmap(ggp = ggp, rawpath1 = "ebd_wispet_relJun-2019.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70)
+
+#gc() # Flesh-footed Shearwater
+migrationmap(ggp = ggp, rawpath1 = "ebd_flfshe_relJun-2019.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70)
+
+#gc() # Common Sandpiper Old World
+migrationmap(ggp = ggp, rawpath1 = "ebd_comsan_relJun-2019.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -15,minlat = -45,maxlong = 180, maxlat = 75)
+
+#gc() # Common Sandpiper India
+migrationmap(ggp = ggp, rawpath1 = "ebd_comsan_relJun-2019.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = 67.5,minlat = 5,maxlong = 100, maxlat = 37)
+
+gc() # GSE - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "Greater spotted eagle.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -15,minlat = -3,maxlong = 142, maxlat = 55)
+
+gc() # LSE - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "Lesser spotted eagle.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -15,minlat = -3,maxlong = 142, maxlat = 55)
+
+gc() # ISE - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "Indian spotted eagle.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -15,minlat = -3,maxlong = 142, maxlat = 55)
+
+gc() # ISE - India
+migrationmap(ggp = ggp, rawpath1 = "Indian spotted eagle.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = 67.5,minlat = 5,maxlong = 100, maxlat = 37)
+
+gc() # Hybrid - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "Hybrid.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -15,minlat = -3,maxlong = 142, maxlat = 55)
+
+gc() # Lesser Kestrel - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "ebd_leskes1_relJan-2019.txt",res = 144,range = 30,step = 2,fps = 10)
+
+gc() # Short-eared Owl - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "ebd_sheowl_relJan-2019.txt",res = 144,range = 30,step = 2,fps = 10)
+
+gc() # Chestnut-headed Bee-Eater - India
+migrationmap(ggp = ggp, rawpath1 = "ebd_chbeat1_relJan-2019.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = 70,minlat = 5,maxlong = 130, maxlat = 50)
+
+gc() # Pied Thrush - India
+migrationmap(ggp = ggp, rawpath1 = "ebd_piethr1_relJan-2019.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = 70,minlat = 5,maxlong = 130, maxlat = 50)
+
+#gc() # Common Pochard vs. Northern Shoveler - India
+migrationmap(ggp = ggp, rawpath1 = "ebd_compoc_relAug-2018.txt",res = 144,range = 35,step = 2,fps = 10,
+             minlong = 60,minlat = 5,maxlong = 130, maxlat = 50,n = 2,
+             rawpath2 = "ebd_norsho_relAug-2018.txt")
+
+#gc() # Common Pochard vs. Northern Pintail - India
+migrationmap(ggp = ggp, rawpath1 = "ebd_compoc_relAug-2018.txt",res = 144,range = 35,step = 2,fps = 10,
+             minlong = 60,minlat = 5,maxlong = 130, maxlat = 50,n = 2,
+             rawpath2 = "ebd_norpin_relAug-2018.txt")
+
+#gc() # Bar-headed goose - India
+migrationmap(ggp = ggp, rawpath1 = "ebd_bahgoo_relAug-2018.txt",res = 144,range = 35,step = 2,fps = 10,
+             minlong = 60,minlat = 5,maxlong = 130, maxlat = 50)
+
+#gc() # Demoiselle crane - India
+migrationmap(ggp = ggp, rawpath1 = "ebd_demcra1_relAug-2018.txt",res = 144,range = 35,step = 2,fps = 10,
+             minlong = 60,minlat = 5,maxlong = 130, maxlat = 50)
+
+gc() # Blue-cheeked bee-eater - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "ebd_bcbeat1_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10)
+
+gc() # Spotted Flycatcher - India
+migrationmap(ggp = ggp, rawpath1 = "ebd_spofly1_relAug-2018.txt",res = 144,range = 35,step = 2,fps = 10,
+             minlong = 60,minlat = 5,maxlong = 130, maxlat = 50)
+
+gc() # Rufous-tailed Scrub Robin - inc. Africa
+migrationmap(ggp = ggp, rawpath1 = "ebd_rtsrob1_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10)
+
+
 
 gc() # Black-tailed Godwit - inc. Africa
 migrationmap(ggp = ggp, rawpath1 = "ebd_bktgod_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10)
@@ -84,9 +184,6 @@ migrationmap(ggp = ggp, rawpath1 = "ebd_blueth_relAug-2018.txt",res = 144,range 
 
 gc() # Blyth's reed warbler - Eurasia
 migrationmap(ggp = ggp, rawpath1 = "ebd_blrwar1_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10,minlat = 5)
-
-gc() # Bar-headed goose - Eurasia
-migrationmap(ggp = ggp, rawpath1 = "ebd_bahgoo_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10,minlat = 5)
 
 gc() # Rosy starling - Eurasia
 migrationmap(ggp = ggp, rawpath1 = "ebd_rossta2_relAug-2018.txt",res = 144,range = 30,step = 2,fps = 10,minlat = 5)

@@ -45,8 +45,11 @@ rsconnect/
 /*.tif
 /*.png
 /*.svg
-/*.xlxs
+/*.xlsx
 /*.pdf
+
+# random files
+/*.ini
 
 # zipped files
 /*.zip

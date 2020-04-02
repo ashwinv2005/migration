@@ -152,7 +152,7 @@ worldbasemap = function()
     # add Natural Earth box projected to Robinson
     geom_polygon(data=NE_box_rob, aes(x=long, y=lat), colour="black", fill="transparent", size = 0.25) +
     # add graticules projected to Robinson
-    geom_path(data=NE_graticules_rob, aes(long, lat, group=group), linetype="dotted", color="grey50", size = 0.25) +
+    #geom_path(data=NE_graticules_rob, aes(long, lat, group=group), linetype="dotted", color="grey50", size = 0.25) +
     # add graticule labels - latitude and longitude
     #geom_text(data = lbl.Y.prj, aes(x = X.prj, y = Y.prj, label = lbl), color="grey50", size=2) +
     #geom_text(data = lbl.X.prj, aes(x = X.prj, y = Y.prj, label = lbl), color="grey50", size=2) +
@@ -200,6 +200,10 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
   data = cbind(projdat, data)
   names(data)[1:2] = c("long","lat")
   
+  data = data %>% select(long,lat,COMMON.NAME,day)
+  data1 = data1 %>% select(COMMON.NAME)
+  data2 = data2 %>% select(COMMON.NAME)
+  
   min = project(cbind(minlong,minlat), proj = PROJ)
   max = project(cbind(maxlong,maxlat), proj = PROJ)
   
@@ -237,19 +241,30 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
   
   l = list()
   nums = c(1:365,1:range)
-  x = c(seq(135,365,step),seq(1,135,step))
+  x = c(seq(101,365,step),seq(1,100,step))
   
   ct = 0
   for (i in x)
   {
     ct = ct + 1
     l[[ct]] = nums[i:(i+range-1)]
+    tpl = 0
+    if(length(l[[ct]][l[[ct]] < 300]) > length(l[[ct]][l[[ct]] > 300]))
+      tpl = 1
+    if(max(l[[ct]]) == 365 & min(l[[ct]]) == 1)
+    {
+      if (tpl == 0)
+        l[[ct]] = l[[ct]][l[[ct]] > 300]
+      if (tpl == 1)
+        l[[ct]] = l[[ct]][l[[ct]] < 300]
+    }
   }
   
   out = lapply(l, function(v){
     
     temp = data %>%
-      filter(day %in% v)
+      filter(day %in% v) %>%
+      distinct(long,lat,COMMON.NAME)
     
     if (isTRUE(world))
     {

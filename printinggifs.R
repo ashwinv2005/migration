@@ -1,11 +1,17 @@
 source('~/GitHub/migration/functions.R')
 ggp = worldbasemap()
 
-migrationmap(ggp = ggp, rawpath1 = "ebd_whtnee_relFeb-2020.txt",res = 144,range = 30,step = 2,fps = 10,
-             minlong = 74,minlat = -35,maxlong = 170, maxlat = 50)
+migrationmapN(ggp = ggp, rawpath1 = "ebd_whtnee_relFeb-2020.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = 74,minlat = -35,maxlong = 170, maxlat = 50, summern = 135, summerx = 255,
+             wintern = 105, winterx = 300)
+
+migrationmapN(ggp = ggp, rawpath1 = "ebd_barswa_relFeb-2020.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70, summern = 105, summerx = 255,
+             wintern = 65, winterx = 315)
 
 migrationmap(ggp = ggp, rawpath1 = "ebd_barswa_relFeb-2020.txt",res = 144,range = 30,step = 2,fps = 10,
              minlong = -180,minlat = -70,maxlong = 180, maxlat = 70)
+
 
 
 PROJ = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 

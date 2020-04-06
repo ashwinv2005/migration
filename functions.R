@@ -173,6 +173,167 @@ worldbasemap = function()
 ###########################################################################
 
 
+migrationmapN = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step = 10, 
+                        fps = 2, shape1 = 19, shape2 = 17, world = F, minlong = -15, 
+                        minlat = -33, maxlong = 180, maxlat = 70, ggp, summern = 135, summerx = 255,
+                        wintern = 105, winterx = 300)
+{
+  require(tidyverse)
+  require(rgdal)
+  require(magick)
+  
+  if (n==1)
+  {
+    data = readcleanrawdata(rawpath = rawpath1)
+  }
+  
+  if (n!=1)
+  {
+    data1 = readcleanrawdata(rawpath = rawpath1)
+    data2 = readcleanrawdata(rawpath = rawpath2)
+    data = rbind(data1,data2)
+    data1 = data1 %>% select(COMMON.NAME)
+    data2 = data2 %>% select(COMMON.NAME)
+  }
+  
+  PROJ = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 
+  #PROJ = "+proj=eck4 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 
+  
+  projdat = project(cbind(data$LONGITUDE,data$LATITUDE), proj = PROJ)
+  data = cbind(projdat, data)
+  names(data)[1:2] = c("long","lat")
+  
+  data = data %>% select(long,lat,COMMON.NAME,day)
+  
+  min = project(cbind(minlong,minlat), proj = PROJ)
+  max = project(cbind(maxlong,maxlat), proj = PROJ)
+  
+  ##############
+  
+  if (n==1)
+  {
+    species = data$COMMON.NAME[1]
+    shapes = shape1
+    specs = species
+  }
+  
+  if (n==2)
+  {
+    spec1 = data1$COMMON.NAME[1]
+    spec2 = data2$COMMON.NAME[1]
+    specs = c(spec1,spec2)
+    species = paste(specs[1],"circles","    ",specs[2],"triangles")
+    if (sort(specs)[1] == specs[1])
+    {
+      shapes = c(shape2,shape1)
+    }
+    if (sort(specs)[1] != specs[1])
+    {
+      shapes = c(shape1,shape2)
+    }
+  }
+  
+  mon = c(rep("January",31),rep("February",28),rep("March",31),rep("April",30),rep("May",31),rep("June",30),
+          rep("July",31),rep("August",31),rep("September",30),rep("October",31),rep("November",30),
+          rep("December",31))
+  
+  img = image_graph(width = 1080, height = 810, res = res)
+  #datalist = split(data, data$fort)
+  
+  l = list()
+  nums = c(1:365,1:(range-1))
+  x = c(seq(101,365,step),seq(1,100,step))
+  
+  ct = 0
+  for (i in x)
+  {
+    ct = ct + 1
+    l[[ct]] = nums[i:(i+range-1)]
+    if(max(l[[ct]]) == 365 & min(l[[ct]]) == 1)
+      l[[ct]][l[[ct]]<=365 & l[[ct]]>(365-range)] = l[[ct]][l[[ct]]<=365 & l[[ct]]>(365-range)] - 365
+  }
+  
+  out = lapply(l, function(v){
+    
+    v1 = v
+    if(min(v1) <= 0)
+    {
+      v1[v1<=0] = v1[v1<=0]+365
+    }
+    
+    temp = data %>%
+      filter(day %in% v1) %>%
+      distinct(long,lat,COMMON.NAME)
+    
+    med = floor(median(v))
+    if (med == 0)
+      med = 365
+    if (med < 0)
+      med = med + 365
+    
+    if (isTRUE(world))
+    {
+      p = ggp +
+        {if(med > summern & med <= summerx)geom_point(data = temp, 
+                  aes(x = long,y = lat, shape = COMMON.NAME, alpha = 0.8, stroke = 0), 
+                  size = 1.5, col = "#D23114")} +
+        {if((med > wintern & med <= summern) | (med > summerx & med <= winterx))geom_point(data = temp, 
+                  aes(x = long,y = lat, shape = COMMON.NAME, alpha = 0.8, stroke = 0), 
+                  size = 1.5, col = "#E5C91E")} +
+        {if(med <= wintern | med > winterx)geom_point(data = temp, 
+                  aes(x = long,y = lat, shape = COMMON.NAME, alpha = 0.8, stroke = 0), 
+                  size = 1.5, col = "#275E90")} +
+        ggtitle(mon[med], size = 1) +
+        theme(plot.title = element_text(hjust = 0.01, size = 10)) +
+        scale_shape_manual(breaks = sort(specs), values = shapes) +
+        theme(legend.position = "none")
+    }
+    else
+    {
+      p = ggp +
+        {if(med > summern & med <= summerx)geom_point(data = temp, 
+                  aes(x = long,y = lat, shape = COMMON.NAME, alpha = 0.8, stroke = 0), 
+                  size = 1.5, col = "#D23114")} +
+        {if((med > wintern & med <= summern) | (med > summerx & med <= winterx))geom_point(data = temp, 
+                  aes(x = long,y = lat, shape = COMMON.NAME, alpha = 0.8, stroke = 0), 
+                  size = 1.5, col = "#E5C91E")} +
+        {if(med <= wintern | med > winterx)geom_point(data = temp, 
+                   aes(x = long,y = lat, shape = COMMON.NAME, alpha = 0.8, stroke = 0), 
+                   size = 1.5, col = "#275E90")} +        
+        coord_cartesian(xlim = c(min[1],max[1]), ylim = c(min[2],max[2])) +
+        ggtitle(mon[med]) +
+        theme(plot.title = element_text(hjust = 0.01, size = 10)) +
+        scale_shape_manual(breaks = sort(specs), values = shapes) +
+        theme(legend.position = "none")
+    }
+    
+    p1 = ggdraw(p) + draw_label(species, 0.5, 0.975, size = 10)
+    print(p1)
+  })
+  dev.off()
+  
+  if (n == 1)
+  {
+    nm = specs
+    nm = paste(nm,"_",minlong,"_",minlat,"_",maxlong,"_",maxlat,".gif",sep = "")
+  }
+  
+  if (n != 1)
+  {
+    nm1 = specs1
+    nm2 = specs2
+    nm = paste(nm1,"_",nm2,"_",minlong,"_",minlat,"_",maxlong,"_",maxlat,".gif",sep = "")
+  }
+  
+  
+  animation = image_animate(img, fps = fps)
+  image_write(animation, nm)
+  
+  #ggsave("map_draft_1.png", width=28, height=13.5, units="cm", dpi=600)
+}
+
+
+
 migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step = 10, 
                         fps = 2, col1 = "red", col2 = "blue", world = F, minlong = -15, 
                         minlat = -33, maxlong = 180, maxlat = 70,ggp)
@@ -191,6 +352,8 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
     data1 = readcleanrawdata(rawpath = rawpath1)
     data2 = readcleanrawdata(rawpath = rawpath2)
     data = rbind(data1,data2)
+    data1 = data1 %>% select(COMMON.NAME)
+    data2 = data2 %>% select(COMMON.NAME)
   }
   
   PROJ = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 
@@ -201,8 +364,7 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
   names(data)[1:2] = c("long","lat")
   
   data = data %>% select(long,lat,COMMON.NAME,day)
-  data1 = data1 %>% select(COMMON.NAME)
-  data2 = data2 %>% select(COMMON.NAME)
+
   
   min = project(cbind(minlong,minlat), proj = PROJ)
   max = project(cbind(maxlong,maxlat), proj = PROJ)
@@ -234,13 +396,13 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
   
   mon = c(rep("January",31),rep("February",28),rep("March",31),rep("April",30),rep("May",31),rep("June",30),
           rep("July",31),rep("August",31),rep("September",30),rep("October",31),rep("November",30),
-          rep("December",31),rep("January",range))
+          rep("December",31))
   
   img = image_graph(width = 1080, height = 810, res = res)
   #datalist = split(data, data$fort)
   
   l = list()
-  nums = c(1:365,1:range)
+  nums = c(1:365,1:(range-1))
   x = c(seq(101,365,step),seq(1,100,step))
   
   ct = 0
@@ -248,29 +410,34 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
   {
     ct = ct + 1
     l[[ct]] = nums[i:(i+range-1)]
-    tpl = 0
-    if(length(l[[ct]][l[[ct]] < 300]) > length(l[[ct]][l[[ct]] > 300]))
-      tpl = 1
     if(max(l[[ct]]) == 365 & min(l[[ct]]) == 1)
-    {
-      if (tpl == 0)
-        l[[ct]] = l[[ct]][l[[ct]] > 300]
-      if (tpl == 1)
-        l[[ct]] = l[[ct]][l[[ct]] < 300]
-    }
+      l[[ct]][l[[ct]]<=365 & l[[ct]]>(365-range)] = l[[ct]][l[[ct]]<=365 & l[[ct]]>(365-range)] - 365
   }
   
   out = lapply(l, function(v){
     
+    v1 = v
+    if(min(v1) <= 0)
+    {
+      v1[v1<=0] = v1[v1<=0]+365
+    }
+    
     temp = data %>%
-      filter(day %in% v) %>%
+      filter(day %in% v1) %>%
       distinct(long,lat,COMMON.NAME)
+    
+    med = floor(median(v))
+    if (med == 0)
+      med = 365
+    if (med < 0)
+      med = med + 365
+    
     
     if (isTRUE(world))
     {
       p = ggp +
-        geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.8, stroke = 0), size = 1.5) +
-        ggtitle(mon[median(v)], size = 1) +
+        if(switchs)geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.8, stroke = 0), size = 1.5) +
+        ggtitle(mon[med], size = 1) +
         theme(plot.title = element_text(hjust = 0.01, size = 10)) +
         scale_color_manual(breaks = sort(specs), values = cols) +
         theme(legend.position = "none")
@@ -280,7 +447,7 @@ migrationmap = function(n=1, rawpath1, rawpath2=NA, res = 120, range = 30, step 
       p = ggp +
         geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.8, stroke = 0), size = 1.5) +
         coord_cartesian(xlim = c(min[1],max[1]), ylim = c(min[2],max[2])) +
-        ggtitle(mon[median(v)]) +
+        ggtitle(mon[med]) +
         theme(plot.title = element_text(hjust = 0.01, size = 10)) +
         scale_color_manual(breaks = sort(specs), values = cols) +
         theme(legend.position = "none")

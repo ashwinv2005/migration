@@ -9,9 +9,24 @@ migrationmapN(ggp = ggp, rawpath1 = "ebd_barswa_relFeb-2020.txt",res = 144,range
              minlong = -180,minlat = -70,maxlong = 180, maxlat = 70, summern = 105, summerx = 255,
              wintern = 65, winterx = 315)
 
-migrationmap(ggp = ggp, rawpath1 = "ebd_barswa_relFeb-2020.txt",res = 144,range = 30,step = 2,fps = 10,
-             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70)
 
+start = Sys.time()
+migrationmap(ggp = ggp, rawpath1 = "ebd_whtnee_relFeb-2020.txt",res = 144,range = 30,step = 2,fps = 10,
+             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70)
+end = Sys.time()
+step2 = end-start
+
+start = Sys.time()
+migrationmap(ggp = ggp, rawpath1 = "ebd_whtnee_relFeb-2020.txt",res = 144,range = 30,step = 4,fps = 10,
+             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70)
+end = Sys.time()
+step4 = end-start
+
+start = Sys.time()
+migrationmap(ggp = ggp, rawpath1 = "ebd_whtnee_relFeb-2020.txt",res = 144,range = 30,step = 5,fps = 10,
+             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70)
+end = Sys.time()
+step5 = end-start
 
 
 PROJ = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs" 

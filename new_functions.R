@@ -530,8 +530,7 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
         #    colour = "black",
         #    size = 2)) +
         theme(legend.position = "none")
-      p1 = ggdraw(p) + 
-        draw_label(species, 0.5, 0.97, size = 12, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
+      p1 = ggdraw(p)
     }
     
     xt = v1[floor(range/2)]
@@ -549,12 +548,13 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
       geom_vline(xintercept = xt, size = 0.1)+
       scale_x_continuous(limits = c(1,365), breaks= mdays, labels=mlabs)+
       scale_y_continuous(limits = yaxis, breaks= ybreaks)+
-      xlab("months")+ ylab("frequency in India (%)")+
+      xlab("months")+ ggtitle("frequency in India (%)")+
       theme(text=element_text(family="Gill Sans"))+
       theme(axis.title.x = element_blank(), axis.text.x = element_text(size = 8, face = 'bold'),
             axis.ticks.x = element_blank(),axis.ticks.y = element_blank(),
-            axis.title.y = element_text(angle = 90, size = 6), 
-            axis.text.y = element_text(size = 6)) +
+            axis.title.y = element_blank(), 
+            axis.text.y = element_text(size = 8, hjust = 3),
+            plot.title = element_text(size = 9, hjust = 0.5)) +
       theme(panel.background = element_rect(fill = "#b6ccb6"),
                                                plot.margin = margin(1, 1, 1, 1, "mm"),
                                                plot.background = element_rect(
@@ -566,6 +566,22 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
             panel.grid.minor = element_blank(),
             panel.border = element_blank())
     
+    qj = ggplot() +
+      theme(text=element_text(family="Gill Sans"))+
+      theme(panel.background = element_rect(fill = "#b6ccb6"),
+            plot.margin = margin(1, 1, 1, 1, "mm"),
+            plot.background = element_rect(
+              fill = "#b6ccb6",
+              colour = NA,
+              size = 1),
+            axis.line=element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank())
+    
+    qj1 = ggdraw(qj) + 
+      draw_label(species, 0.5, 0.58, size = 11, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
+    
       
     a<-image_read(rawpathPhoto)
     
@@ -576,9 +592,13 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     vp = viewport(width = 0.3, height = 0.2, x = 0.32,
                   y = unit(6.35, "lines"), just = c("right","top"))
     
+    vq = viewport(width = 0.25, height = 0.030, x = 0.5,
+                  y = 0.99, just = c("center","top"))
+    
     full = function() {
       print(vv)
       print(qi, vp = vp)
+      print(qj1, vp = vq)
     }
     
     full()

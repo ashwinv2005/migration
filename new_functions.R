@@ -118,11 +118,17 @@ cleanmodifydata = function(datapath,sensitivedatapath)
     filter(ALL.SPECIES.REPORTED == 1) %>%
     group_by(group.id,COMMON.NAME) %>% slice(1) %>% ungroup %>%
     dplyr::select(imp) %>%
-    mutate(OBSERVATION.DATE = as.Date(OBSERVATION.DATE), 
+    mutate(season = "summer",
+           OBSERVATION.DATE = as.Date(OBSERVATION.DATE), 
            month = month(OBSERVATION.DATE),
            day = day(OBSERVATION.DATE) + cdays[month],
-           year = year(OBSERVATION.DATE)) %>%
-    dplyr::select(-c("OBSERVATION.DATE")) %>%
+           week = week(OBSERVATION.DATE),
+           fort = ceiling(day/14),
+           year = year(OBSERVATION.DATE),
+           season = ifelse(month %in% c(3,4), "spring", season),
+           season = ifelse(month %in% c(12,1,2), "winter", season),
+           season = ifelse(month %in% c(9,10,11), "autumn", season)) %>%
+    dplyr::select(-c("OBSERVATION.DATE","week","month")) %>%
     ungroup
   
   bb = matrix(nrow=2,ncol=2)
@@ -258,25 +264,73 @@ worldbasemap = function()
 
 ## Use to create a reporting frequency of individual species for each day in the year
 ## Input species name, eg Tytler's Leaf Warbler
-create_freq<-function(Species,data)
+create_freq<-function(Species,data,migstatus)
   {
-  data$month = as.factor(data$month)
   
-  temp = data %>%
-    filter(COMMON.NAME == Species) %>%
-    distinct(gridg3,month)
-  data = temp %>% left_join(data)
-  
-  freq<-matrix(ncol=3, nrow=365)
-  freq[,1]<-c(1:365)
-  
-  out<-for (i in freq[,1]){
-    dat1<-data%>%subset(day == i)  
-    freq[i,2]<-length(which(dat1$COMMON.NAME == Species))
-    freq[i,3]<-n_distinct(dat1$group.id)
+  if (migstatus %in% c("S","W","P"))
+  {
+    temp = data %>%
+      filter(COMMON.NAME == Species) %>%
+      distinct(gridg3)
+    data = temp %>% left_join(data)
   }
-  freq<-as.data.frame(freq)
-  colnames(freq)<-c("day","detected","checklists")
+  
+  if (migstatus == "LM")
+  {
+    temp = data %>%
+      filter(COMMON.NAME == Species) %>%
+      distinct(gridg3,season)
+    data = temp %>% left_join(data)
+  }
+  
+  freq1<-matrix(ncol=3, nrow=365)
+  freq1[,1]<-c(1:365)
+  
+  out<-for (i in freq1[,1]){
+    dat1<-data%>%subset(day == i)  
+    freq1[i,2]<-length(which(dat1$COMMON.NAME == Species))
+    freq1[i,3]<-n_distinct(dat1$group.id)
+  }
+  freq1<-as.data.frame(freq1)
+  colnames(freq1)<-c("day","detected","checklists")
+  
+  #freq2<-matrix(ncol=3, nrow=12)
+  #freq2[,1]<-c(1:12)
+  
+  #out<-for (i in freq2[,1]){
+  #  dat1<-data%>%subset(month == i)  
+  #  freq2[i,2]<-length(which(dat1$COMMON.NAME == Species))
+  #  freq2[i,3]<-n_distinct(dat1$group.id)
+  #}
+  #freq2<-as.data.frame(freq2)
+  #colnames(freq2)<-c("month","detected","checklists")
+  
+  #freq3<-matrix(ncol=3, nrow=53)
+  #freq3[,1]<-c(1:53)
+  
+  #out<-for (i in freq3[,1]){
+  #  dat1<-data%>%subset(week == i)  
+  #  freq3[i,2]<-length(which(dat1$COMMON.NAME == Species))
+  #  freq3[i,3]<-n_distinct(dat1$group.id)
+  #}
+  #freq3<-as.data.frame(freq3)
+  #colnames(freq3)<-c("week","detected","checklists")
+  
+  freq4<-matrix(ncol=3, nrow=27)
+  freq4[,1]<-c(1:27)
+  
+  out<-for (i in freq4[,1]){
+    dat1<-data%>%subset(fort == i)  
+    freq4[i,2]<-length(which(dat1$COMMON.NAME == Species))
+    freq4[i,3]<-n_distinct(dat1$group.id)
+  }
+  freq4<-as.data.frame(freq4)
+  colnames(freq4)<-c("fort","detected","checklists")
+  
+  freq = list(freq1,
+              #freq2,
+              #freq3,
+              freq4)
   return(freq)
   }
 
@@ -289,9 +343,9 @@ create_freq<-function(Species,data)
 #### Code is for single species at the moment
 
 migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPhoto,  res = 120, range = 30,
-                        step = 10, fps = 2, col1 = "red", col2 = "blue", pointsize, yaxis, ybreaks,
+                        step = 10, fps = 2, col1 = "red", col2 = "blue", pointsize, yaxis,
                         world = F, minlong = -15, 
-                        minlat = -33, maxlong = 180, maxlat = 70,ggp,dataall)
+                        minlat = -33, maxlong = 180, maxlat = 70,ggp,dataall,migstatus,credit)
 {
   require(tidyverse)
   require(rgdal)
@@ -300,8 +354,59 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
   require(grid)
   require(ggpubr)
   require(extrafont)
+  require(ggformula)
+  require(zoo)
   
-  freq = create_freq(Species = Species1, data = dataall)
+  freq = create_freq(Species = Species1, data = dataall, migstatus = migstatus)
+  
+  freq1 = freq[[1]]
+  #freq2 = freq[[2]]
+  #freq3 = freq[[3]]
+  freq4 = freq[[2]]
+  freq1$checklists[freq1$checklists == 0] = 1
+  #freq2$checklists[freq2$checklists == 0] = 1
+  #freq3$checklists[freq3$checklists == 0] = 1
+  freq4$checklists[freq4$checklists == 0] = 1
+  freq1$perc = (freq1$detected/freq1$checklists)*100
+  #freq2$perc = (freq2$detected/freq2$checklists)*100
+  #freq3$perc = (freq3$detected/freq3$checklists)*100
+  freq4$perc = (freq4$detected/freq4$checklists)*100
+  mdays = c(15.5,45.0,74.5,105.0,135.5,166.0,196.5,227.5,258.0,288.5,319.0,349.5)
+  #mweek = rollmean(seq(0,365,7),2)
+  mfort = rollmean(seq(0,365,14),2)
+  #freq2$day = mdays
+  #freq3$day = c(mweek,mweek[1]+365)
+  freq4$day = c(mfort,mfort[1]+365)
+  
+  spl1 = smooth.spline(c(freq1$day,(freq1$day+365),(freq1$day+730)),rep(freq1$perc,3),nknots=30)
+  #spl2 = smooth.spline(c(freq2$day,(freq2$day+365),(freq2$day+730)),rep(freq2$perc,3),nknots=30)
+  #spl3 = smooth.spline(c(freq3$day,(freq3$day+365),(freq3$day+730)),rep(freq3$perc,3),nknots=30)
+  spl4 = smooth.spline(c(freq4$day,(freq4$day+365),(freq4$day+730)),rep(freq4$perc,3),nknots=30)
+  
+  spl1a = predict(spl1,366:730)
+  spl1a = as.data.frame(spl1a)
+  spl1a$y[spl1a$y<0] = 0
+  
+  #spl2a = predict(spl2,366:730)
+  #spl2a = as.data.frame(spl2a)
+  #spl2a$y[spl2a$y<0] = 0
+  
+  #spl3a = predict(spl3,366:730)
+  #spl3a = as.data.frame(spl3a)
+  #spl3a$y[spl3a$y<0] = 0
+  
+  spl4a = predict(spl4,366:730)
+  spl4a = as.data.frame(spl4a)
+  spl4a$y[spl4a$y<0] = 0
+  
+  #print(freq[[2]])
+  #print(spl4a)
+  
+  spl = spl4a
+  spl$x = 1:365
+  
+  yaxis = c(0,ceiling(max(na.omit(spl$y))))
+  ybreaks = seq(0,yaxis[2],1)
   
   if (n==1)
   {
@@ -359,8 +464,7 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
           rep("July",31),rep("August",31),rep("September",30),rep("October",31),rep("November",30),
           rep("December",31))
   
-  mdays = c(15.5,45.0,74.5,105.0,135.5,166.0,196.5,227.5,258.0,288.5,319.0,349.5)
-  mlabs = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+  mlabs = c("J","F","M","A","M","J","J","A","S","O","N","D")
   
   img = image_graph(width = 1080, height = 810, res = res)
   #datalist = split(data, data$fort)
@@ -391,7 +495,7 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
       filter(day %in% v1) %>%
       distinct(long,lat,COMMON.NAME)
     
-    temp1 = freq %>%
+    temp1 = freq1 %>%
       filter(day %in% v1) 
     
     med = floor(median(i))
@@ -405,7 +509,7 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     if (isTRUE(world))
     {
       p = ggp +
-        if(switchs)geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.8, stroke = 0), size = 1.5) +
+        if(switchs)geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.95, stroke = 0), size = 1.5) +
         ggtitle(mon[med], size = 1) +
         theme(plot.title = element_text(hjust = 0.01, size = 10)) +
         scale_color_manual(breaks = sort(specs), values = cols) +
@@ -414,54 +518,63 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     else
     {
       p = ggp +
-        geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.8, stroke = 0), size = pointsize) +
+        geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.95, stroke = 0), size = pointsize) +
         coord_cartesian(xlim = c(min[1],max[1]), ylim = c(min[2],max[2])) +
         theme(plot.title = element_text(hjust = 0.01, size = 10)) +
         scale_color_manual(breaks = sort(specs), values = cols) +
-        ggtitle(mon[med]) +
-        theme(legend.position = "none")+
-        theme(panel.background = element_rect(fill = "white"),
-          plot.margin = margin(2, 2, 2, 2, "mm"),
-          plot.background = element_rect(
-            fill = "grey90",
-            colour = "black",
-            size = 2))
-      p1 = ggdraw(p) + draw_label(species, 0.5, 0.975, size = 10)+theme(text=element_text(family="Gill Sans", size=10))
+        #ggtitle(mon[med]) +
+        #theme(panel.background = element_rect(fill = "white"),
+        #  plot.margin = margin(2, 2, 2, 2, "mm"),
+        #  plot.background = element_rect(
+        #    fill = "grey90",
+        #    colour = "black",
+        #    size = 2)) +
+        theme(legend.position = "none")
+      p1 = ggdraw(p) + 
+        draw_label(species, 0.5, 0.97, size = 12, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
     }
     
     xt = v1[floor(range/2)]
-    ggg<-c(((sum(temp1$detected)/sum(temp1$checklists))*100),xt)
-    avg<-rbind(avg,ggg, deparse.level = 0)
-    colnames(avg)<-c("frequency","day")
-    avg<-as.data.frame(avg)
+    #ggg<-c(((sum(temp1$detected)/sum(temp1$checklists))*100),xt)
+    #avg<-rbind(avg,ggg, deparse.level = 0)
+    #colnames(avg)<-c("frequency","day")
+    #avg<-as.data.frame(avg)
     #print(avg)
 
 
-    qi<-ggplot(avg,aes(y = frequency,x =  day)) + geom_point(size = 1.5)+
+    qi<-ggplot(freq1,aes(y = perc,x =  day)) + 
+      #geom_point(size = 1.5)+
       #geom_line()+
+      geom_line(data = spl, aes(x=x,y=y), size=1)+
+      geom_vline(xintercept = xt, size = 0.1)+
       scale_x_continuous(limits = c(1,365), breaks= mdays, labels=mlabs)+
       scale_y_continuous(limits = yaxis, breaks= ybreaks)+
       xlab("months")+ ylab("frequency in India (%)")+
       theme(text=element_text(family="Gill Sans"))+
-      theme(axis.title.x = element_blank(), axis.text.x = element_text(size = 6),
+      theme(axis.title.x = element_blank(), axis.text.x = element_text(size = 8, face = 'bold'),
             axis.ticks.x = element_blank(),axis.ticks.y = element_blank(),
-            axis.title.y = element_text(angle = 90, size = 8), 
+            axis.title.y = element_text(angle = 90, size = 6), 
             axis.text.y = element_text(size = 6)) +
-      theme(panel.background = element_rect(fill = "white"),
+      theme(panel.background = element_rect(fill = "#b6ccb6"),
                                                plot.margin = margin(1, 1, 1, 1, "mm"),
                                                plot.background = element_rect(
-                                                 fill = "white",
-                                                 colour = "black",
-                                                 size = 1))
+                                                 fill = "#b6ccb6",
+                                                 colour = NA,
+                                                 size = 1),
+            axis.line=element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank())
     
       
     a<-image_read(rawpathPhoto)
     
-    vv<-ggdraw(p1) + draw_image(a, x = 1.01, y = 0.905, hjust = 1, vjust = 0.9, width = 0.25, height = 0.25)
+    vv<-ggdraw(p1) + draw_image(a, x = 1.01, y = 0.945, hjust = 1, vjust = 0.9, width = 0.25, height = 0.25) +
+      draw_label(credit, 0.83, 0.96, size = 6, fontfamily="Gill Sans", colour = "black")
     
     ## include in the function component, probably
-    vp = viewport(width = 0.4, height = 0.3, x = 0.42,
-                  y = unit(9.1, "lines"), just = c("right","top"))
+    vp = viewport(width = 0.3, height = 0.2, x = 0.32,
+                  y = unit(6.35, "lines"), just = c("right","top"))
     
     full = function() {
       print(vv)

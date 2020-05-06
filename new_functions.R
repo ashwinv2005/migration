@@ -258,8 +258,19 @@ worldbasemap = function()
     # the default, ratio = 1 in coord_fixed ensures that one unit on the x-axis is the same length as one unit on the y-axis
     coord_fixed(ratio = 1) +
     # remove the background and default gridlines
-    theme_void() +
-    theme(plot.background = element_rect(fill = "#142952"))
+    theme(axis.line=element_blank(),
+          axis.text.x=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank(),
+          plot.margin=unit(c(0,0,0,0), "cm"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          plot.background = element_rect(fill = NA, colour = NA),
+          panel.background = element_rect(fill = "#142952", colour = NA))
+  
   
   return(ggp)
 }

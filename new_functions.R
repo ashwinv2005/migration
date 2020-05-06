@@ -222,6 +222,8 @@ worldbasemap = function()
   NE_countries_rob  = spTransform(NE_countries, CRSobj = PROJ)
   NE_graticules_rob = spTransform(NE_graticules, CRSobj = PROJ)
   NE_box_rob        = spTransform(NE_box, CRSobj = PROJ)
+  NE_India = NE_countries[NE_countries@data$geounit == "India",]
+  NE_India_rob  = spTransform(NE_India, CRSobj = PROJ)
   
   # project long-lat coordinates for graticule label data frames 
   # (two extra columns with projected XY are created)
@@ -233,12 +235,19 @@ worldbasemap = function()
   lbl.X.prj = cbind(prj.coord, lbl.X)
   names(lbl.X.prj)[1:2] = c("X.prj","Y.prj")
   
+  #038056 #old green
+  #04af76 #old India
+  #002fb3 #old ocean
+  #ffbd1c #old point colour
+  
+  
   # __________ Plot layers
   ggp = ggplot() +
     # add Natural Earth box projected to Robinson
-    geom_polygon(data=NE_box_rob, aes(x=long, y=lat), colour="black", fill="#002fb3", size = 0.25) +
+    geom_polygon(data=NE_box_rob, aes(x=long, y=lat), colour="black", fill="#142952", size = 0.25) +
     # add Natural Earth countries projected to Robinson, give black border and fill with gray
-    geom_polygon(data=NE_countries_rob, aes(long,lat, group=group), colour="black", fill="#038056", size = 0.25) +
+    geom_polygon(data=NE_countries_rob, aes(long,lat, group=group), colour="black", fill="#004d00", size = 0.25) +
+    geom_polygon(data=NE_India_rob, aes(long,lat, group=group), colour="black", fill="#008000", size = 0.25) +
     # Note: "Regions defined for each Polygons" warning has to do with fortify transformation. Might get deprecated in future!
     # alternatively, use use map_data(NE_countries) to transform to data frame and then use project() to change to desired projection.
     # add graticules projected to Robinson
@@ -405,7 +414,8 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
   spl = spl4a
   spl$x = 1:365
   
-  yaxis = c(0,ceiling(max(na.omit(spl$y))))
+  mx = max(na.omit(spl$y))
+  yaxis = c(0,(mx+0.02))
   ybreaks = seq(0,yaxis[2],1)
   
   if (n==1)
@@ -442,6 +452,8 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     species = data$COMMON.NAME[1]
     cols = col1
     specs = species
+    wd = strwidth(species,family = "Gill Sans",units = 'figure')
+    wd = wd + 0.03
   }
   
   if (n==2)
@@ -458,6 +470,8 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     {
       cols = c(col1,col2)
     }
+    wd = strwidth(species,family = "Gill Sans",units = 'figure')
+    wd = wd + 0.03
   }
   
   mon = c(rep("January",31),rep("February",28),rep("March",31),rep("April",30),rep("May",31),rep("June",30),
@@ -481,6 +495,11 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     if(max(l[[ct]]) == 365 & min(l[[ct]]) == 1)
       l[[ct]][l[[ct]]<=365 & l[[ct]]>(365-range)] = l[[ct]][l[[ct]]<=365 & l[[ct]]>(365-range)] - 365
   }
+  
+  a = image_read(rawpathPhoto)
+  a = image_scale(a, "400")
+  a = image_border(a, "black", "2x2")
+  a = image_annotate(a, credit, font = 'Gill Sans', size = 20, location = "+7+3")
   
   avg<-matrix(ncol = 2,nrow = 0)
   for (i in l){
@@ -509,7 +528,7 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     if (isTRUE(world))
     {
       p = ggp +
-        if(switchs)geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.95, stroke = 0), size = 1.5) +
+        if(switchs)geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.99, stroke = 0), size = 1.5) +
         ggtitle(mon[med], size = 1) +
         theme(plot.title = element_text(hjust = 0.01, size = 10)) +
         scale_color_manual(breaks = sort(specs), values = cols) +
@@ -518,17 +537,11 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     else
     {
       p = ggp +
-        geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.95, stroke = 0), size = pointsize) +
+        geom_point(data = temp, aes(x = long,y = lat, col = COMMON.NAME, alpha = 0.99, stroke = 0), size = pointsize) +
         coord_cartesian(xlim = c(min[1],max[1]), ylim = c(min[2],max[2])) +
         theme(plot.title = element_text(hjust = 0.01, size = 10)) +
         scale_color_manual(breaks = sort(specs), values = cols) +
         #ggtitle(mon[med]) +
-        #theme(panel.background = element_rect(fill = "white"),
-        #  plot.margin = margin(2, 2, 2, 2, "mm"),
-        #  plot.background = element_rect(
-        #    fill = "grey90",
-        #    colour = "black",
-        #    size = 2)) +
         theme(legend.position = "none")
       p1 = ggdraw(p)
     }
@@ -548,19 +561,19 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
       geom_vline(xintercept = xt, size = 0.1)+
       scale_x_continuous(limits = c(1,365), breaks= mdays, labels=mlabs)+
       scale_y_continuous(limits = yaxis, breaks= ybreaks)+
-      xlab("months")+ ggtitle("frequency in India (%)")+
+      xlab("months")+ ggtitle(paste("frequency in India ","(max ",round(mx,1),"%)",sep = ""))+
       theme(text=element_text(family="Gill Sans"))+
-      theme(axis.title.x = element_blank(), axis.text.x = element_text(size = 8, face = 'bold'),
-            axis.ticks.x = element_blank(),axis.ticks.y = element_blank(),
+      theme(axis.title.x = element_blank(), axis.text.x = element_text(colour = "black",size = 8),
+            axis.ticks.x = element_blank(), axis.ticks.y = element_blank(),
             axis.title.y = element_blank(), 
-            axis.text.y = element_text(size = 8, hjust = 3),
+            axis.text.y = element_blank(),
             plot.title = element_text(size = 9, hjust = 0.5)) +
-      theme(panel.background = element_rect(fill = "#b6ccb6"),
+      theme(panel.background = element_rect(fill = "#008000"),
                                                plot.margin = margin(1, 1, 1, 1, "mm"),
                                                plot.background = element_rect(
-                                                 fill = "#b6ccb6",
-                                                 colour = NA,
-                                                 size = 1),
+                                                 fill = "#008000",
+                                                 colour = "black",
+                                                 size = 0.5),
             axis.line=element_blank(),
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
@@ -572,29 +585,26 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
             plot.margin = margin(1, 1, 1, 1, "mm"),
             plot.background = element_rect(
               fill = "#b6ccb6",
-              colour = NA,
-              size = 1),
+              colour = "black",
+              size = 0.5),
             axis.line=element_blank(),
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             panel.border = element_blank())
     
-    qj1 = ggdraw(qj) + 
+    qj1 = ggdraw(qj) +
       draw_label(species, 0.5, 0.58, size = 11, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
     
-      
-    a<-image_read(rawpathPhoto)
-    
-    vv<-ggdraw(p1) + draw_image(a, x = 1.01, y = 0.945, hjust = 1, vjust = 0.9, width = 0.25, height = 0.25) +
-      draw_label(credit, 0.83, 0.96, size = 6, fontfamily="Gill Sans", colour = "black")
+    vv<-ggdraw(p1) + draw_image(a, x = 1.01, y = 0.945, hjust = 1, vjust = 0.9, width = 0.25, height = 0.25)
     
     ## include in the function component, probably
     vp = viewport(width = 0.3, height = 0.2, x = 0.32,
                   y = unit(6.35, "lines"), just = c("right","top"))
     
-    vq = viewport(width = 0.25, height = 0.030, x = 0.5,
+    vq = viewport(width = wd, height = 0.030, x = 0.5,
                   y = 0.99, just = c("center","top"))
     
+
     full = function() {
       print(vv)
       print(qi, vp = vp)

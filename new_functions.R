@@ -244,7 +244,7 @@ worldbasemap = function()
   # __________ Plot layers
   ggp = ggplot() +
     # add Natural Earth box projected to Robinson
-    geom_polygon(data=NE_box_rob, aes(x=long, y=lat), colour="black", fill="#142952", size = 0.25) +
+    geom_polygon(data=NE_box_rob, aes(x=long, y=lat), colour=NA, fill="#142952", size = 0.25) +
     # add Natural Earth countries projected to Robinson, give black border and fill with gray
     geom_polygon(data=NE_countries_rob, aes(long,lat, group=group), colour="black", fill="#004d00", size = 0.25) +
     geom_polygon(data=NE_India_rob, aes(long,lat, group=group), colour="black", fill="#008000", size = 0.25) +
@@ -258,7 +258,8 @@ worldbasemap = function()
     # the default, ratio = 1 in coord_fixed ensures that one unit on the x-axis is the same length as one unit on the y-axis
     coord_fixed(ratio = 1) +
     # remove the background and default gridlines
-    theme_void()
+    theme_void() +
+    theme(plot.background = element_rect(fill = "#142952"))
   
   return(ggp)
 }

@@ -366,7 +366,7 @@ create_freq<-function(Species,data,migstatus)
 migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPhoto,  res = 120, range = 30,
                         step = 10, fps = 2, col1 = "red", col2 = "blue", pointsize, yaxis,
                         world = F, minlong = -15, 
-                        minlat = -33, maxlong = 180, maxlat = 70,ggp,dataall,migstatus,credit)
+                        minlat = -33, maxlong = 180, maxlat = 70,ggp,dataall,migstatus,credit,impos,grpos)
 {
   require(tidyverse)
   require(rgdal)
@@ -511,9 +511,19 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
   }
   
   a = image_read(rawpathPhoto)
-  a = image_scale(a, "400")
+  a = image_scale(a, "300")
   a = image_border(a, "black", "3x3")
-  a = image_annotate(a, credit, font = 'Gill Sans', size = 30, location = "+8+4")
+  a = image_annotate(a, credit, font = 'Gill Sans', size = 24, location = "+8+4")
+  
+  b = image_read("birdcountindia logo.png")
+  b = image_scale(b, "300")
+  b = image_background(b, "#b6ccb6", flatten = TRUE)
+  b = image_border(b, "black", "3x3")
+  
+  c = image_read("eBird India logo.png")
+  c = image_scale(c, "300")
+  c = image_background(c, "#b6ccb6", flatten = TRUE)
+  c = image_border(c, "black", "4x4")
   
   avg<-matrix(ncol = 2,nrow = 0)
   for (i in l){
@@ -609,11 +619,33 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     qj1 = ggdraw(qj) +
       draw_label(species, 0.5, 0.58, size = 12, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
     
-    vv<-ggdraw(p1) + draw_image(a, x = 1.01, y = 0.945, hjust = 1, vjust = 0.9, width = 0.25, height = 0.25)
+    vv<-ggdraw(p1) + {if(impos == "R")draw_image(a, x = 1.017, y = 0.955, hjust = 1, vjust = 0.9, 
+                                                 width = 0.25, height = 0.25)} +
+      {if(impos == "L")draw_image(a, x = 0.238, y = 0.955, hjust = 1, vjust = 0.9, 
+                                  width = 0.25, height = 0.25)} +
+      {if(grpos == "R")draw_image(b, x = 0.215, y = 0.0885, hjust = 1, vjust = 0.9, 
+                                  width = 0.230, height = 0.07)} +
+      {if(grpos == "R")draw_image(c, x = 0.287, y = 0.0885, hjust = 1, vjust = 0.9, 
+                                  width = 0.105, height = 0.07)} +
+    {if(grpos == "L")draw_image(b, x = 0.923, y = 0.0885, hjust = 1, vjust = 0.9, 
+                                width = 0.230, height = 0.07)} +
+      {if(grpos == "L")draw_image(c, x = 0.995, y = 0.0885, hjust = 1, vjust = 0.9, 
+                                  width = 0.105, height = 0.07)}
+      
     
     ## include in the function component, probably
-    vp = viewport(width = 0.3, height = 0.2, x = 0.32,
-                  y = unit(6.35, "lines"), just = c("right","top"))
+    
+    if (grpos == "L")
+    {
+      vp = viewport(width = 0.3, height = 0.2, x = 0.32,
+                    y = unit(6.35, "lines"), just = c("right","top"))
+    }
+    
+    if (grpos == "R")
+    {
+      vp = viewport(width = 0.3, height = 0.2, x = 0.685,
+                    y = unit(6.35, "lines"), just = c("left","top"))
+    }
     
     vq = viewport(width = wd, height = 0.032, x = 0.5,
                   y = 0.99, just = c("center","top"))

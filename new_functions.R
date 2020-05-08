@@ -244,7 +244,7 @@ worldbasemap = function()
   # __________ Plot layers
   ggp = ggplot() +
     # add Natural Earth box projected to Robinson
-    geom_polygon(data=NE_box_rob, aes(x=long, y=lat), colour=NA, fill="#142952", size = 0.25) +
+    #geom_polygon(data=NE_box_rob, aes(x=long, y=lat), colour=NA, fill="#142952", size = 0.25) +
     # add Natural Earth countries projected to Robinson, give black border and fill with gray
     geom_polygon(data=NE_countries_rob, aes(long,lat, group=group), colour="black", fill="#004d00", size = 0.25) +
     geom_polygon(data=NE_India_rob, aes(long,lat, group=group), colour="black", fill="#008000", size = 0.25) +
@@ -264,7 +264,7 @@ worldbasemap = function()
           axis.ticks=element_blank(),
           axis.title.x=element_blank(),
           axis.title.y=element_blank(),
-          plot.margin=unit(c(0,0,0,0), "cm"),
+          plot.margin=unit(c(0,0,-0.09,-0.1), "cm"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.border = element_blank(),
@@ -617,19 +617,19 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
             panel.border = element_blank())
     
     qj1 = ggdraw(qj) +
-      draw_label(species, 0.5, 0.58, size = 12, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
+      draw_label(species, 0.5, 0.58, size = 13, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
     
     vv<-ggdraw(p1) + {if(impos == "R")draw_image(a, x = 1.017, y = 0.955, hjust = 1, vjust = 0.9, 
                                                  width = 0.25, height = 0.25)} +
-      {if(impos == "L")draw_image(a, x = 0.238, y = 0.955, hjust = 1, vjust = 0.9, 
+      {if(impos == "L")draw_image(a, x = 0.234, y = 0.955, hjust = 1, vjust = 0.9, 
                                   width = 0.25, height = 0.25)} +
-      {if(grpos == "R")draw_image(b, x = 0.215, y = 0.0885, hjust = 1, vjust = 0.9, 
+      {if(grpos == "R")draw_image(b, x = 0.21, y = 0.0826, hjust = 1, vjust = 0.9, 
                                   width = 0.230, height = 0.07)} +
-      {if(grpos == "R")draw_image(c, x = 0.287, y = 0.0885, hjust = 1, vjust = 0.9, 
+      {if(grpos == "R")draw_image(c, x = 0.282, y = 0.0826, hjust = 1, vjust = 0.9, 
                                   width = 0.105, height = 0.07)} +
-    {if(grpos == "L")draw_image(b, x = 0.923, y = 0.0885, hjust = 1, vjust = 0.9, 
+    {if(grpos == "L")draw_image(b, x = 0.923, y = 0.0826, hjust = 1, vjust = 0.9, 
                                 width = 0.230, height = 0.07)} +
-      {if(grpos == "L")draw_image(c, x = 0.995, y = 0.0885, hjust = 1, vjust = 0.9, 
+      {if(grpos == "L")draw_image(c, x = 0.995, y = 0.0826, hjust = 1, vjust = 0.9, 
                                   width = 0.105, height = 0.07)}
       
     
@@ -637,17 +637,17 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
     
     if (grpos == "L")
     {
-      vp = viewport(width = 0.3, height = 0.2, x = 0.32,
-                    y = unit(6.35, "lines"), just = c("right","top"))
+      vp = viewport(width = 0.3, height = 0.2, x = 0.316,
+                    y = unit(6.22, "lines"), just = c("right","top"))
     }
     
     if (grpos == "R")
     {
       vp = viewport(width = 0.3, height = 0.2, x = 0.685,
-                    y = unit(6.35, "lines"), just = c("left","top"))
+                    y = unit(6.22, "lines"), just = c("left","top"))
     }
     
-    vq = viewport(width = wd, height = 0.032, x = 0.5,
+    vq = viewport(width = wd, height = 0.035, x = 0.5,
                   y = 0.99, just = c("center","top"))
     
 

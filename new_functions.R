@@ -304,6 +304,11 @@ create_freq<-function(Species,data,migstatus)
     data = temp %>% left_join(data)
   }
   
+  if (migstatus == "Pel")
+  {
+    data = data
+  }
+  
   freq1<-matrix(ncol=3, nrow=365)
   freq1[,1]<-c(1:365)
   
@@ -617,7 +622,7 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
             panel.border = element_blank())
     
     qj1 = ggdraw(qj) +
-      draw_label(species, 0.5, 0.58, size = 13, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
+      draw_label(species, 0.5, 0.59, size = 13, fontfamily="Gill Sans", fontface = 'bold', colour = "black")
     
     vv<-ggdraw(p1) + {if(impos == "R")draw_image(a, x = 1.017, y = 0.955, hjust = 1, vjust = 0.9, 
                                                  width = 0.25, height = 0.25)} +
@@ -647,7 +652,7 @@ migrationmap = function(n=1, Species1,SciName, rawpath1, rawpath2=NA, rawpathPho
                     y = unit(6.22, "lines"), just = c("left","top"))
     }
     
-    vq = viewport(width = wd, height = 0.035, x = 0.5,
+    vq = viewport(width = wd, height = 0.04, x = 0.5,
                   y = 0.99, just = c("center","top"))
     
 

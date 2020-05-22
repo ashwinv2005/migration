@@ -158,8 +158,32 @@ migrationmap(ggp = ggp, Species1 = "Indian Pitta", SciName = "Pitta brachyura",
              minlong = 55,minlat = 5,maxlong = 105, maxlat = 40, impos = "R", grpos = "L",
              pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Shantanu Kuvasekar")
 
+migrationmap(ggp = ggp, Species1 = "Cattle Egret", SciName = "Bubuculus ibis",
+             rawpath1 = "ebd_categr_relMar-2020.txt", rawpathPhoto = "CAEG.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
+             minlong = -180,minlat = -70,maxlong = 180, maxlat = 70, impos = "R", grpos = "L",
+             pointsize = 1.5, dataall = data, migstatus = "LM", credit = "Andy Reago & Chrissy McClarren" )
 
+migrationmap(ggp = ggp, Species1 = "Cattle Egret", SciName = "Bubuculus ibis",
+             rawpath1 = "ebd_categr_relMar-2020.txt", rawpathPhoto = "CAEG.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
+             minlong = 35,minlat = -15, maxlong = 150, maxlat = 55, impos = "L", grpos = "L",
+             pointsize = 1.5, dataall = data, migstatus = "LM", credit = "Andy Reago & Chrissy McClarren")
 
+migrationmap(ggp = ggp, Species1 = "Black Kite", SciName = "Milvius migrans",
+             rawpath1 = "ebd_blakit1_relMar-2020.txt", rawpathPhoto = "BLKI.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
+             minlong = -50,minlat = -45,maxlong = 180, maxlat = 70, impos = "L", grpos = "L",
+             pointsize = 1.5, dataall = data, migstatus = "LM", credit = "Koshy Koshy")
 
+migrationmap(ggp = ggp, Species1 = "Common Crane", SciName = "Grus grus",
+             rawpath1 = "ebd_comcra_relApr-2020.txt", rawpathPhoto = "COCR.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
+             minlong = -15,minlat = -5,maxlong = 180, maxlat = 75, impos = "R", grpos = "L",
+             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Marie-Lan Taÿ Pamart") 
 
-
+migrationmap(ggp = ggp, Species1 = "Demoiselle Crane", SciName = "Grus virgo",
+             rawpath1 = "ebd_demcra1_relApr-2020.txt", rawpathPhoto = "DECR.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
+             minlong = -5,minlat = -5,maxlong = 180, maxlat = 70, impos = "R", grpos = "L",
+             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Sumeet Moghe")

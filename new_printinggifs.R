@@ -1,75 +1,60 @@
 ##R.Data file
-#load("D:/Post_NCBS/NCF/migration/ebd_IN_relMar-2020/filtered_ebd.RData")
-
-#setwd("D:/Post_NCBS/NCF/migration")
-#source('D:/Post_NCBS/NCF/migration/new_functions.R')
 
 ######################
 ## Run cleanmodifydata() only once with the correct data path and sensitive data path (.txt files) specified
 ## Subsequently only load dataforfreq.RData (saved by the previous function in the working directory)
 
 source('~/GitHub/migration/new_functions.R')
-cleanmodifydata(datapath = "ebd_IN_relDec-2019.txt", sensitivedatapath = "Sensitive_India_may 2019.csv")
+cleanmodifydata(datapath = "ebd_IN_relApr-2020.txt", sensitivedatapath = "ebd_relApr-2020_sensitive.txt")
 
 load("dataforfreq.RData")
 source('~/GitHub/migration/new_functions.R')
 ggp = worldbasemap()
 
-#extrafont::loadfonts(device="win")
-
-
 #migrationmap(ggp = ggp, rawpath1 = "ebd_tylwar1_relMar-2020.txt",  rawpathPhoto = "D:/Post_NCBS/NCF/migration/tlwa.jpg", res = 144,range = 35,step = 10,fps = 5, col1 = "#c26023", yaxis = c(0,0.2), pointsize = 2, minlong = 60,minlat = 5,maxlong = 100, maxlat = 36,data = data)
 
 ##Add Species1 and SciName for for side panel
 
-migrationmap(ggp = ggp, Species1 = "Indian Pitta", SciName = "Pitta brachyura",
-             rawpath1 = "ebd_indpit1_relMar-2020.txt", rawpathPhoto = "INPI.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c",
-             minlong = 55,minlat = 5,maxlong = 105, maxlat = 40, impos = "R", grpos = "L",
-             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Shantanu Kuvasekar")
+############ 2 species
 
-migrationmap(ggp = ggp, Species1 = "Wilson's Storm Petral", SciName = "Oceanites oceanicus",
-             rawpath1 = "ebd_wispet_relMar-2020.txt", rawpathPhoto = "WSPE.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c",
-             minlong = -180,minlat = -70,maxlong = 180, maxlat = 60, impos = "R", grpos = "R",
-             pointsize = 1.5, dataall = data, migstatus = "Pel", credit = "JJ Harrison")
+start = Sys.time()
+migrationmap2(ggp = ggp, Species1 = "Greenish Warbler", Species2 = "Green Warbler",
+              rawpath1 = "ebd_grewar3_relMar-2020.txt", rawpath2 =  "ebd_grnwar1_relMar-2020.txt", 
+              rawpathPhoto2 = "GRWA.jpg", rawpathPhoto1 = "GHWA.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 3,fps = 10, col1 = "#449966", col2 = "#5e488a",
+              minlong = -42,minlat = -32,maxlong = 180, maxlat = 70, impos = "L", grpos = "R",
+              pointsize = 2.5, dataall = data, migstatus1 = "LM", migstatus2 = "LM" ,
+              credit1 = "Dibyendu Ash", credit2 = "Arun Prabhu")
 
-migrationmap(ggp = ggp, Species1 = "Lesser Whitethroat", SciName = "Sylvia curruca",
-             rawpath1 = "ebd_leswhi4_relMar-2020.txt", rawpathPhoto = "LEWH.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c", 
-             minlong = 46,minlat = 5,maxlong = 145, maxlat = 50,
-             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "David Cook")
+migrationmap2(ggp = ggp, Species1 = "Isabelline Shrike", Species2 = "Brown Shrike",
+              rawpath1 = "ebd_isashr1_relMar-2020.txt", rawpath2 = "ebd_brnshr_relMar-2020.txt",
+              rawpathPhoto1 = "ISSH.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "BRSH.jpg",
+              res = 144,range = 30,step = 3,fps = 10, col1 = "#449966", col2 = "#5e488a", 
+              minlong = -42,minlat = -32,maxlong = 180, maxlat = 70,
+              pointsize = 2.5, dataall = data, migstatus1 = "LM", migstatus2 = "LM",
+              credit1= "Pkspks", credit2 = "Sandip Das", impos = "BL", grpos = "L")
+end = Sys.time()
+end-start
 
-migrationmap(ggp = ggp, Species1 = "Garganey", SciName = "Spatula querquedula",
-             rawpath1 = "ebd_gargan_relMar-2020.txt", rawpathPhoto = "GARG.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c", 
-             minlong = 70,minlat = -45,maxlong = 180, maxlat = 55,
-             pointsize = 2.5, dataall = data, migstatus = "S", credit = "Luciano 95")
+start = Sys.time()
+migrationmap(ggp = ggp, Species1 = "Red-headed Bunting", SciName = "Emberiza bruniceps",
+             rawpath1 = "ebd_rehbun1_relMar-2020.txt", rawpathPhoto = "RHBU.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a", 
+             minlong = -10,minlat = 5,maxlong = 170,maxlat = 70, impos = "R", grpos = "L",
+             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Charles J. Sharp")
+end = Sys.time()
+end-start
 
-migrationmap(ggp = ggp, Species1 = "Northern Pintail", SciName = "Anas acuta",
-             rawpath1 = "ebd_norpin_relMar-2020.txt", rawpathPhoto = "NOPI.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c", 
-             minlong = 70,minlat = -45,maxlong = 180, maxlat = 55,
-             pointsize = 2.5, dataall = data, migstatus = "S", credit = "Koshy Koshy")
 
-migrationmap(ggp = ggp, Species1 = "Peregrine Falcon", SciName = "Falco peregrinus",
-             rawpath1 = "ebd_perfal_relMar-2020.txt", rawpathPhoto = "PEFA.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c", 
-             minlong = 46,minlat = 5,maxlong = 145, maxlat = 50,
-             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Mosharaf Hossain")
-
-migrationmap(ggp = ggp, Species1 = "Large-billed Leaf Warbler", SciName = "Phylloscopus magnirostris",
-             rawpath1 = "ebd_lblwar1_relMar-2020.txt", rawpathPhoto = "LBLW.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c", 
-             minlong = 46,minlat = 5,maxlong = 145, maxlat = 50,
-             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "David Cook")
-
-migrationmap(ggp = ggp, Species1 = "Brown-breasted Flycatcher", SciName = "Muscicapa muttui",
-             rawpath1 = "ebd_brbfly2_relMar-2020.txt", rawpathPhoto = "BBFC.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 50,fps = 5, col1 = "#ffbd1c", 
-             minlong = 46,minlat = 5,maxlong = 145, maxlat = 50,
-             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Saswat Mishra")
-
+start = Sys.time()
+ggp = worldbasemapgreen()
+migrationmapgreen(ggp = ggp, Species1 = "Red-headed Bunting", SciName = "Emberiza bruniceps",
+                  rawpath1 = "ebd_rehbun1_relMar-2020.txt", rawpathPhoto = "RHBU.jpg", yaxis = c(-0.1,1.2),
+                  res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c", 
+                  minlong = -10,minlat = 5,maxlong = 170,maxlat = 70, impos = "R", grpos = "L",
+                  pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Charles J. Sharp")
+end = Sys.time()
+end-start
 
 
 ########################### high res runs

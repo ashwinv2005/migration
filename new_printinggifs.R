@@ -1,8 +1,3 @@
-##R.Data file
-
-setwd("D:/Post_NCBS/NCF/migration")
-source('D:/Post_NCBS/NCF/migration/migration-master_final/new_functions.R')
-
 ######################
 ## Run cleanmodifydata() only once with the correct data path and sensitive data path (.txt files) specified
 ## Subsequently only load dataforfreq.RData (saved by the previous function in the working directory)
@@ -14,9 +9,10 @@ load("dataforfreq.RData")
 source('~/GitHub/migration/new_functions.R')
 ggp = worldbasemap()
 
-library(extrafontdb)
-extrafont::loadfonts(device="win")
-dev.off()
+#library(extrafontdb)
+#extrafont::loadfonts(device="win")
+#dev.off()
+
 
 library(gifski)
 
@@ -183,7 +179,7 @@ migrationmap(ggp = ggp, Species1 = "Common Greenshank",
              rawpath1 = "ebd_comgre_relMay-2020.txt", rawpathPhoto = "COGR.jpg", yaxis = c(-0.1,1.2),
              res = 144,range = 30,step = 50,fps = 10, col1 = "#5e488a", 
              minlong = -50,minlat = -50,maxlong = 180, maxlat = 70, impos = "L", grpos = "L",
-             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Åsa Berndtsson")
+             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "?sa Berndtsson")
 
 migrationmap(ggp = ggp, Species1 = "Whimbrel",
              rawpath1 = "ebd_whimbr_relMay-2020.txt", rawpathPhoto = "WHIM.jpg", yaxis = c(-0.1,1.2),
@@ -616,10 +612,10 @@ migrationmap(ggp = ggp, Species1 = "Cattle Egret", SciName = "Bubuculus ibis",
              pointsize = 1.5, dataall = data, migstatus = "LM", credit = "Andy Reago & Chrissy McClarren")
 
 migrationmap(ggp = ggp, Species1 = "Black Kite", SciName = "Milvius migrans",
-             rawpath1 = "ebd_blakit1_relMar-2020.txt", rawpathPhoto = "BLKI.jpg", yaxis = c(-0.1,1.2),
+             rawpath1 = "ebd_blakit1_relApr-2021.txt", rawpathPhoto = "BLKI.jpg", yaxis = c(-0.1,1.2),
              res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
              minlong = -50,minlat = -45,maxlong = 180, maxlat = 70, impos = "L", grpos = "L",
-             pointsize = 1.5, dataall = data, migstatus = "LM", credit = "Koshy Koshy")
+             pointsize = 1.5, dataall = data, migstatus = "LM", credit = "JJ Harrison")
 
 migrationmap(ggp = ggp, Species1 = "Common Crane", SciName = "Grus grus",
              rawpath1 = "ebd_comcra_relApr-2020.txt", rawpathPhoto = "COCR.jpg", yaxis = c(-0.1,1.2),

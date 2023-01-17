@@ -3,7 +3,7 @@
 ## Subsequently only load dataforfreq.RData (saved by the previous function in the working directory)
 
 source('~/GitHub/migration/new_functions.R')
-cleanmodifydata(datapath = "ebd_IN_relApr-2020.txt", sensitivedatapath = "ebd_relApr-2020_sensitive.txt")
+cleanmodifydata(datapath = "ebd_IN_relMar-2021.txt", sensitivedatapath = "ebd_relApr-2021_sensitive.txt")
 
 load("dataforfreq.RData")
 source('~/GitHub/migration/new_functions.R')
@@ -441,7 +441,7 @@ migrationmap(ggp = ggp, Species1 = "Eurasian Hoopoe",
              minlong = -50,minlat = -35,maxlong = 180,maxlat = 65, impos = "L", grpos = "R",
              pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Nrik kiran")
 
-migrationmapS(ggp = ggp, Species1 = "Wilson's Storm Petral",
+migrationmapS(ggp = ggp, Species1 = "Wilson's Storm Petrel",
              rawpath1 = "ebd_wispet_relMar-2020.txt", rawpathPhoto = "WSPE.jpg", yaxis = c(-0.1,1.2),
              res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a", 
              minlong = -180,minlat = -70,maxlong = 180, maxlat = 60, impos = "R", grpos = "R",
@@ -484,16 +484,16 @@ migrationmapS(ggp = ggp, Species1 = "Red-flanked Bluetail",
              pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Alnus")
 
 migrationmapS(ggp = ggp, Species1 = "Northern Wheatear",
-                     rawpath1 = "ebd_norwhe_relOct-2020.txt", rawpathPhoto = "NOWH.jpg", yaxis = c(-0.1,1.2),
-                     res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a", 
-                     minlong = -42,minlat = -32,maxlong = 180,maxlat = 70, impos = "L", grpos = "R",
-                     pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Zeynel Cebeci")
+             rawpath1 = "ebd_norwhe_relOct-2020.txt", rawpathPhoto = "NOWH.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a", 
+             minlong = -42,minlat = -32,maxlong = 180,maxlat = 70, impos = "L", grpos = "R",
+             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Zeynel Cebeci")
 
 migrationmapS(ggp = ggp, Species1 = "Arctic Warbler",
-                     rawpath1 = "ebd_arcwar1_relOct-2020.txt", rawpathPhoto = "ARWA.jpg", yaxis = c(-0.1,1.2),
-                     res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a", 
-                     minlong = -42,minlat = -32,maxlong = 180,maxlat = 70, impos = "L", grpos = "R",
-                     pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Alnus")
+             rawpath1 = "ebd_arcwar1_relOct-2020.txt", rawpathPhoto = "ARWA.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a", 
+             minlong = -42,minlat = -32,maxlong = 180,maxlat = 70, impos = "L", grpos = "R",
+             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Alnus")
 
 migrationmapS(ggp = ggp, Species1 = "Willow Warbler",
               rawpath1 = "ebd_wlwwar_relOct-2020.txt", rawpathPhoto = "WIWA.jpg", yaxis = c(-0.1,1.2),
@@ -512,6 +512,30 @@ migrationmap(ggp = ggp, Species1 = "Ruddy Kingfisher",
              res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a",
              minlong = 40,minlat = -20,maxlong = 160, maxlat = 50, impos = "L", grpos = "L",
              pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Dipu ME-12")
+
+migrationmap(ggp = ggp, Species1 = "Black Kite",
+             rawpath1 = "ebd_blakit1_relApr-2021.txt", rawpathPhoto = "BLKI.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 3,fps = 10, col1 = "#5e488a",
+             minlong = -50,minlat = -45,maxlong = 180, maxlat = 70, impos = "L", grpos = "L",
+             pointsize = 1, dataall = data, migstatus = "LM", credit = "JJ Harrison")
+
+migrationmapS(ggp = ggp, Species1 = "Black-necked Crane",
+             rawpath1 = "ebd_blncra1_relDec-2021.txt", rawpathPhoto = "BNCR.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", 
+             minlong = 50,minlat = 5,maxlong = 150,maxlat = 50, impos = "L", grpos = "R",
+             pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Candle Tree")
+
+migrationmapS(ggp = ggp, Species1 = "Yellow Wagtail",
+             rawpath1 = "ebd_eaywag_relDec-2021.txt", rawpathPhoto = "YEWA.jpg", yaxis = c(-0.1,1.2),
+             res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", 
+             minlong = -50,minlat = -50,maxlong = 180, maxlat = 70, impos = "L", grpos = "L",
+             pointsize = 1, dataall = data, migstatus = "W", credit = "Charles J. Sharp")
+
+
+
+
+
+
 
 ########################### high res runs
 
@@ -613,7 +637,7 @@ migrationmap(ggp = ggp, Species1 = "Cattle Egret", SciName = "Bubuculus ibis",
 
 migrationmap(ggp = ggp, Species1 = "Black Kite", SciName = "Milvius migrans",
              rawpath1 = "ebd_blakit1_relApr-2021.txt", rawpathPhoto = "BLKI.jpg", yaxis = c(-0.1,1.2),
-             res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
+             res = 144,range = 30,step = 10,fps = 10, col1 = "#ffbd1c",
              minlong = -50,minlat = -45,maxlong = 180, maxlat = 70, impos = "L", grpos = "L",
              pointsize = 1.5, dataall = data, migstatus = "LM", credit = "JJ Harrison")
 
@@ -628,3 +652,382 @@ migrationmap(ggp = ggp, Species1 = "Demoiselle Crane", SciName = "Grus virgo",
              res = 144,range = 30,step = 3,fps = 10, col1 = "#ffbd1c",
              minlong = -5,minlat = -5,maxlong = 180, maxlat = 70, impos = "R", grpos = "L",
              pointsize = 2.5, dataall = data, migstatus = "LM", credit = "Sumeet Moghe")
+
+
+
+
+
+
+
+
+
+
+
+
+############# Pelagic runs
+
+source('~/GitHub/migration/new_functions.R')
+ggp = worldbasemap()
+
+library(gifski)
+
+
+migrationmapS(ggp = ggp, Species1 = "Red Phalarope",
+              rawpath1 = "ebd_redpha1_relFeb-2022.txt", rawpathPhoto = "REPH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Christoph Moning")
+
+migrationmapS(ggp = ggp, Species1 = "Red-necked Phalarope",
+              rawpath1 = "ebd_renpha_relFeb-2022.txt", rawpathPhoto = "RNPH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Greg Smith")
+
+migrationmapS(ggp = ggp, Species1 = "Bridled Tern",
+              rawpath1 = "ebd_briter1_relFeb-2022.txt", rawpathPhoto = "BRTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Aviceda")
+
+migrationmapS(ggp = ggp, Species1 = "Sooty Tern",
+              rawpath1 = "ebd_sooter1_relFeb-2022.txt", rawpathPhoto = "SOTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "patrickkavanagh")
+
+migrationmapS(ggp = ggp, Species1 = "Brown Noddy",
+              rawpath1 = "ebd_brnnod_relFeb-2022.txt", rawpathPhoto = "BRNO.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "JJ Harrison")
+
+migrationmapS(ggp = ggp, Species1 = "Lesser Noddy",
+              rawpath1 = "ebd_lesnod1_relFeb-2022.txt", rawpathPhoto = "LENO.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Peter Steward")
+
+migrationmapS(ggp = ggp, Species1 = "Lesser Crested Tern",
+              rawpath1 = "ebd_lecter2_relFeb-2022.txt", rawpathPhoto = "LCTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Dominic Sherony")
+
+migrationmapS(ggp = ggp, Species1 = "White-cheeked Tern",
+              rawpath1 = "ebd_whcter1_relFeb-2022.txt", rawpathPhoto = "WCTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Pelagic 26/03/22")
+
+migrationmapS(ggp = ggp, Species1 = "Common Tern",
+              rawpath1 = "ebd_comter_relFeb-2022.txt", rawpathPhoto = "COTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "David Cook")
+
+migrationmapS(ggp = ggp, Species1 = "Long-tailed Jaeger",
+              rawpath1 = "ebd_lotjae_relFeb-2022.txt", rawpathPhoto = "LTJA.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Smudge 900")
+
+migrationmapS(ggp = ggp, Species1 = "Parasitic Jaeger",
+              rawpath1 = "ebd_parjae_relFeb-2022.txt", rawpathPhoto = "ARSK.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "AWeith")
+
+migrationmapS(ggp = ggp, Species1 = "Pomerine Jaeger",
+              rawpath1 = "ebd_pomjae_relFeb-2022.txt", rawpathPhoto = "POSK.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Gunnsteinn Jonsson")
+
+migrationmapS(ggp = ggp, Species1 = "Brown Skua",
+              rawpath1 = "ebd_brnsku3_relFeb-2022.txt", rawpathPhoto = "BRSK.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "David Cook")
+
+migrationmapS(ggp = ggp, Species1 = "Great Skua",
+              rawpath1 = "ebd_gresku1_relFeb-2022.txt", rawpathPhoto = "GRSK.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Andreas Trepte")
+
+migrationmapS(ggp = ggp, Species1 = "South Polar Skua",
+              rawpath1 = "ebd_sopsku1_relFeb-2022.txt", rawpathPhoto = "SPSK.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Tom Benson")
+
+migrationmapS(ggp = ggp, Species1 = "Lesser Frigatebird",
+              rawpath1 = "ebd_lesfri_relFeb-2022.txt", rawpathPhoto = "LEFR.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Ron Knight")
+
+migrationmapS(ggp = ggp, Species1 = "Red-billed Tropicbird",
+              rawpath1 = "ebd_rebtro_relFeb-2022.txt", rawpathPhoto = "RBTR.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Jomy Varghese")
+
+migrationmapS(ggp = ggp, Species1 = "Red-tailed Tropicbird",
+              rawpath1 = "ebd_rettro_relFeb-2022.txt", rawpathPhoto = "RTTR.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "ericdalecreative")
+
+migrationmapS(ggp = ggp, Species1 = "White-tailed Tropicbird",
+              rawpath1 = "ebd_whttro_relFeb-2022.txt", rawpathPhoto = "WTTR.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "patrickkavanagh")
+
+migrationmapS(ggp = ggp, Species1 = "Swinhoe's Storm-Petrel",
+              rawpath1 = "ebd_swspet_relFeb-2022.txt", rawpathPhoto = "SSPE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Albin Jacob")
+
+migrationmapS(ggp = ggp, Species1 = "Black-bellied Storm-Petrel",
+              rawpath1 = "ebd_bbspet1_relFeb-2022.txt", rawpathPhoto = "BBSP.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Maans Booysen")
+
+migrationmapS(ggp = ggp, Species1 = "European Storm-Petrel",
+              rawpath1 = "ebd_bripet_relFeb-2022.txt", rawpathPhoto = "ESPE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Richard Crossley")
+
+migrationmapS(ggp = ggp, Species1 = "Wilson's Storm-Petrel",
+              rawpath1 = "ebd_wispet_relFeb-2022.txt", rawpathPhoto = "WSPE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "JJ Harrison")
+
+migrationmapS(ggp = ggp, Species1 = "Persian Shearwater",
+              rawpath1 = "ebd_pershe1_relFeb-2022.txt", rawpathPhoto = "PESH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Shivashankar Manjunatha")
+
+migrationmapS(ggp = ggp, Species1 = "Short-tailed Shearwater",
+              rawpath1 = "ebd_shtshe_relFeb-2022.txt", rawpathPhoto = "STSH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Leo")
+
+migrationmapS(ggp = ggp, Species1 = "Tropical Shearwater",
+              rawpath1 = "ebd_troshe5_relFeb-2022.txt", rawpathPhoto = "TRSH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Mukesh Bhatt")
+
+migrationmapS(ggp = ggp, Species1 = "Sooty Shearwater",
+              rawpath1 = "ebd_sooshe_relFeb-2022.txt", rawpathPhoto = "SOSH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Don Loarie")
+
+migrationmapS(ggp = ggp, Species1 = "Wedge-tailed Shearwater",
+              rawpath1 = "ebd_wetshe_relFeb-2022.txt", rawpathPhoto = "WTSH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Leo")
+
+migrationmapS(ggp = ggp, Species1 = "Flesh-footed Shearwater",
+              rawpath1 = "ebd_flfshe_relFeb-2022.txt", rawpathPhoto = "FFSH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "patrickkavanagh")
+
+migrationmapS(ggp = ggp, Species1 = "Cory's Shearwater",
+              rawpath1 = "ebd_corshe_relFeb-2022.txt", rawpathPhoto = "COSH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Hobbyfotowiki")
+
+migrationmapS(ggp = ggp, Species1 = "Streaked Shearwater",
+              rawpath1 = "ebd_strshe_relFeb-2022.txt", rawpathPhoto = "SKSH.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Subramanian Sankar")
+
+migrationmapS(ggp = ggp, Species1 = "Jouanin's Petrel",
+              rawpath1 = "ebd_joupet_relFeb-2022.txt", rawpathPhoto = "JOPE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Garima Bhatia")
+
+migrationmapS(ggp = ggp, Species1 = "Bulwer's Petrel",
+              rawpath1 = "ebd_bulpet_relFeb-2022.txt", rawpathPhoto = "BUPE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Jérémie Silvestro")
+
+migrationmapS(ggp = ggp, Species1 = "Southern Fulmar",
+              rawpath1 = "ebd_souful1_relFeb-2022.txt", rawpathPhoto = "SOFU.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "JJ Harrison")
+
+migrationmapS(ggp = ggp, Species1 = "Northern Fulmar",
+              rawpath1 = "ebd_norful_relFeb-2022.txt", rawpathPhoto = "NOFU.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Charles J. Sharp")
+
+migrationmapS(ggp = ggp, Species1 = "Southern Giant-Petrel",
+              rawpath1 = "ebd_angpet1_relFeb-2022.txt", rawpathPhoto = "SGPE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Liam Quinn")
+
+migrationmapS(ggp = ggp, Species1 = "Northern Giant-Petrel",
+              rawpath1 = "ebd_norgip1_relFeb-2022.txt", rawpathPhoto = "NGPE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Samuel Blanc")
+
+migrationmapS(ggp = ggp, Species1 = "Black-browed Albatross",
+              rawpath1 = "ebd_bkbalb_relFeb-2022.txt", rawpathPhoto = "BBAL.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "JJ Harrison")
+
+migrationmapS(ggp = ggp, Species1 = "Grey-headed Albatross",
+              rawpath1 = "ebd_gyhalb_relFeb-2022.txt", rawpathPhoto = "GHAL.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "JJ Harrison")
+
+migrationmapS(ggp = ggp, Species1 = "Atlantic Puffin",
+              rawpath1 = "ebd_atlpuf_relFeb-2022.txt", rawpathPhoto = "ATPU.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Charles J. Sharp")
+
+migrationmapS(ggp = ggp, Species1 = "Red-footed Booby",
+              rawpath1 = "ebd_refboo_relFeb-2022.txt", rawpathPhoto = "RFBO.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Joseph C Boone")
+
+migrationmapS(ggp = ggp, Species1 = "Masked Booby",
+              rawpath1 = "ebd_masboo_relFeb-2022.txt", rawpathPhoto = "MABO.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Bettina Arrigoni")
+
+migrationmapS(ggp = ggp, Species1 = "Great Frigatebird",
+              rawpath1 = "ebd_grefri_relFeb-2022.txt", rawpathPhoto = "GRFR.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Charles J. Sharp")
+
+migrationmapS(ggp = ggp, Species1 = "Arctic Tern",
+              rawpath1 = "ebd_arcter_relFeb-2022.txt", rawpathPhoto = "ARTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "AWeith")
+
+migrationmapS(ggp = ggp, Species1 = "Roseate Tern",
+              rawpath1 = "ebd_roster_relFeb-2022.txt", rawpathPhoto = "ROTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Mandar Bhagat")
+
+migrationmapS(ggp = ggp, Species1 = "Great Crested Tern",
+              rawpath1 = "ebd_grcter1_relFeb-2022.txt", rawpathPhoto = "GCTE.jpg", yaxis = c(-0.1,1.2),
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#5e488a", namepos = "image",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5, credit = "Glen Fergus")
+
+
+
+
+############# Pelagic double runs
+
+source('~/GitHub/migration/new_functions.R')
+ggp = worldbasemap()
+
+library(gifski)
+
+migrationmap2S(ggp = ggp, Species1 = "Long-tailed Jaeger", Species2 = "Wilson's Storm-Petrel",
+              rawpath1 = "ebd_lotjae_relFeb-2022.txt", rawpath2 = "ebd_wispet_relFeb-2022.txt",
+              rawpathPhoto1 = "LTJA.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "WSPE.jpg",
+              res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+              minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+              pointsize = 1.5,
+              credit1= "Smudge 900", credit2 = "JJ Harrison")
+
+migrationmap2S(ggp = ggp, Species1 = "Arctic Tern", Species2 = "Common Tern",
+               rawpath1 = "ebd_arcter_relFeb-2022.txt", rawpath2 = "ebd_comter_relFeb-2022.txt",
+               rawpathPhoto1 = "ARTE.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "COTE.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "AWeith", credit2 = "David Cook")
+
+migrationmap2S(ggp = ggp, Species1 = "Great Skua", Species2 = "Brown Skua",
+               rawpath1 = "ebd_gresku1_relFeb-2022.txt", rawpath2 = "ebd_brnsku3_relFeb-2022.txt",
+               rawpathPhoto1 = "GRSK.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "BRSK.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "Andreas Trepte", credit2 = "David Cook")
+
+migrationmap2S(ggp = ggp, Species1 = "Parasitic Jaeger", Species2 = "South Polar Skua",
+               rawpath1 = "ebd_parjae_relFeb-2022.txt", rawpath2 = "ebd_sopsku1_relFeb-2022.txt",
+               rawpathPhoto1 = "ARSK.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "SPSK.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "Aweith", credit2 = "Tom Benson")
+
+migrationmap2S(ggp = ggp, Species1 = "Pomerine Jaeger", Species2 = "South Polar Skua",
+               rawpath1 = "ebd_pomjae_relFeb-2022.txt", rawpath2 = "ebd_sopsku1_relFeb-2022.txt",
+               rawpathPhoto1 = "POSK.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "SPSK.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "Gunnsteinn Jonsson", credit2 = "Tom Benson")
+
+migrationmap2S(ggp = ggp, Species1 = "Northern Fulmar", Species2 = "Southern Fulmar",
+               rawpath1 = "ebd_norful_relFeb-2022.txt", rawpath2 = "ebd_souful1_relFeb-2022.txt",
+               rawpathPhoto1 = "NOFU.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "SOFU.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "Charles J. Sharp", credit2 = "JJ Harrison")
+
+migrationmap2S(ggp = ggp, Species1 = "Bridled Tern", Species2 = "Sooty Tern",
+               rawpath1 = "ebd_briter1_relFeb-2022.txt", rawpath2 = "ebd_sooter1_relFeb-2022.txt",
+               rawpathPhoto1 = "BRTE.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "SOTE.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "Aviceda", credit2 = "patrickkavanagh")
+
+migrationmap2S(ggp = ggp, Species1 = "Jouanin's Petrel", Species2 = "Bulwer's Petrel",
+               rawpath1 = "ebd_joupet_relFeb-2022.txt", rawpath2 = "ebd_bulpet_relFeb-2022.txt",
+               rawpathPhoto1 = "JOPE.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "BUPE.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "Garima Bhatia", credit2 = "Jérémie Silvestro")
+
+migrationmap2S(ggp = ggp, Species1 = "Persian Shearwater", Species2 = "Streaked Shearwater",
+               rawpath1 = "ebd_pershe1_relFeb-2022.txt", rawpath2 = "ebd_strshe_relFeb-2022.txt",
+               rawpathPhoto1 = "PESH.jpg", yaxis = c(-0.1,1.2), rawpathPhoto2 = "SKSH.jpg",
+               res = 144,range = 30,step = 5,fps = 10, col1 = "#449966", col2 = "#5e488a",
+               minlong = -180,minlat = -65,maxlong = 180, maxlat = 70, impos = "BX", grpos = "LX",
+               pointsize = 1.5,
+               credit1= "Shivashankar Manjunatha", credit2 = "Subramanian Sankar")
+
+
